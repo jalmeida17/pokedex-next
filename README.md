@@ -2,6 +2,8 @@
 
 Un Pokédex des 1 025 Pokémon, construit avec **Next.js 16** (App Router), **React 19**, **TypeScript**, **Tailwind CSS 4** et **Zustand**. Les données viennent de la [PokéAPI](https://pokeapi.co), publique et sans clé.
 
+**En ligne : [pokedex-next-sand.vercel.app](https://pokedex-next-sand.vercel.app)**
+
 ## Fonctionnalités
 
 - **Liste paginée** : 24 Pokémon par page, avec illustration, numéro et types.
