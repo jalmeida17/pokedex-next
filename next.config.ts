@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  // Les illustrations officielles sont hébergées sur GitHub par la PokéAPI.
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "raw.githubusercontent.com" }],
+  },
   turbopack: {
     rules: {
       "*.css": {

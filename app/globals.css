@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
+/*
+  Une seule rampe de gris neutres, trois rôles de texte, un accent.
+  Le thème sombre ne change que ces variables : aucun composant n'a de variante « dark: ».
+  Le thème suit le système, sauf si l'utilisateur en choisit un (components/BoutonTheme.tsx).
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --fond: #fafafa; /* fond de page */
+  --carte: #ffffff; /* surface posée sur le fond */
+  --releve: #f4f4f5; /* surface relevée : vignette, ligne active, survol */
+  --releve-2: #ebebed; /* un cran de plus, pour le survol d'une surface relevée */
+  --texte: #171717; /* texte principal */
+  --texte-2: #525252; /* texte secondaire */
+  --texte-3: #737373; /* méta, légendes, icônes */
+  --trait: rgb(23 23 23 / 0.08); /* filet discret */
+  --trait-fort: rgb(23 23 23 / 0.16);
+  --inverse: #ffffff; /* texte posé sur un aplat « texte » */
+  --accent: #d2232f; /* le rouge du Pokédex, utilisé rarement */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/*
+  Thème sombre, dans deux cas :
+  1. l'utilisateur l'a choisi avec le bouton (data-theme="dark" sur <html>) ;
+  2. il n'a rien choisi et son système est en sombre.
+  Les deux blocs portent les mêmes valeurs : le CSS ne permet pas de les écrire une seule fois.
+*/
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --fond: #141415;
+  --carte: #19191b;
+  --releve: #232325;
+  --releve-2: #2c2c2f;
+  --texte: #ededed;
+  --texte-2: #a1a1a6;
+  --texte-3: #85858b;
+  --trait: rgb(237 237 237 / 0.08);
+  --trait-fort: rgb(237 237 237 / 0.16);
+  --inverse: #141415;
+  --accent: #f0646a;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --fond: #141415;
+    --carte: #19191b;
+    --releve: #232325;
+    --releve-2: #2c2c2f;
+    --texte: #ededed;
+    --texte-2: #a1a1a6;
+    --texte-3: #85858b;
+    --trait: rgb(237 237 237 / 0.08);
+    --trait-fort: rgb(237 237 237 / 0.16);
+    --inverse: #141415;
+    --accent: #f0646a;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-fond: var(--fond);
+  --color-carte: var(--carte);
+  --color-releve: var(--releve);
+  --color-releve-2: var(--releve-2);
+  --color-texte: var(--texte);
+  --color-texte-2: var(--texte-2);
+  --color-texte-3: var(--texte-3);
+  --color-trait: var(--trait);
+  --color-trait-fort: var(--trait-fort);
+  --color-inverse: var(--inverse);
+  --color-accent: var(--accent);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@theme {
+  /* Une couleur par type : elle ne sert qu'à la pastille qui l'identifie. */
+  --color-type-normal: #8a8a7a;
+  --color-type-fire: #e0621f;
+  --color-type-water: #3b7fe0;
+  --color-type-electric: #d9a400;
+  --color-type-grass: #4a9e44;
+  --color-type-ice: #38a5aa;
+  --color-type-fighting: #b93a31;
+  --color-type-poison: #9a4bb1;
+  --color-type-ground: #ae8936;
+  --color-type-flying: #6b87d6;
+  --color-type-psychic: #df4a78;
+  --color-type-bug: #8b9a1f;
+  --color-type-rock: #9f8b3d;
+  --color-type-ghost: #6a589e;
+  --color-type-dragon: #6a50e0;
+  --color-type-dark: #75635a;
+  --color-type-steel: #7d7d96;
+  --color-type-fairy: #cf63a0;
+
+  /* Une seule courbe pour tous les mouvements. */
+  --ease-doux: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Une seule entrée : le contenu principal monte de quelques pixels. */
+  --animate-entree: entree 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Un menu qui s'ouvre : la même montée, plus courte. */
+  --animate-menu: entree 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes entree {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--fond);
+    color: var(--texte);
+  }
+
+  /* Un contour de focus visible partout, au clavier seulement. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* La croix native du champ de recherche fait doublon avec nos éléments. */
+  input[type="search"]::-webkit-search-cancel-button {
+    appearance: none;
+  }
 }
