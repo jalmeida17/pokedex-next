@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { ICONE } from "@/lib/styles";
 import { TYPES } from "@/lib/types";
+import IconeType from "./IconeType";
 
 export const CLASSES_BOUTON_FILTRE =
   "inline-flex h-11 shrink-0 items-center gap-2 rounded-[10px] border border-trait bg-carte px-3.5 text-[15px] transition-colors duration-150 ease-doux hover:bg-releve disabled:opacity-60";
@@ -65,7 +66,7 @@ export default function FiltreTypes() {
       >
         {typeActif ? (
           <>
-            <span aria-hidden className={`size-2 rounded-full ${TYPES[typeActif].classe}`} />
+            <IconeType type={typeActif} />
             <span className="sr-only">Type : </span>
             {TYPES[typeActif].libelle}
           </>
@@ -104,7 +105,7 @@ export default function FiltreTypes() {
                 aria-current={actif ? "true" : undefined}
                 className={`${LIGNE} ${actif ? "bg-releve font-medium" : "text-texte-2 hover:text-texte"}`}
               >
-                <span aria-hidden className={`size-2 shrink-0 rounded-full ${style.classe}`} />
+                <IconeType type={cle} />
                 <span className="flex-1">{style.libelle}</span>
                 {actif && <Check {...ICONE} />}
               </Link>

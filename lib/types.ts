@@ -21,6 +21,11 @@ export const TYPES: Record<string, { libelle: string; classe: string }> = {
   fairy: { libelle: "Fée", classe: "bg-type-fairy" },
 };
 
+// La couleur d'un type sous forme de variable CSS, à poser dans --type.
+export function couleurType(type: string | undefined): string {
+  return type && type in TYPES ? `var(--color-type-${type})` : "var(--texte-3)";
+}
+
 // « #025 » à partir de 25.
 export function formaterNumero(id: number): string {
   return `#${String(id).padStart(3, "0")}`;

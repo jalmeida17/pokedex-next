@@ -16,15 +16,25 @@ Un Pokédex des 1 025 Pokémon, construit avec **Next.js 16** (App Router), **Re
 
 ## Interface
 
-Un catalogue calme : des surfaces neutres, un seul accent (le rouge du Pokédex, utilisé rarement), et la couleur laissée aux illustrations.
+Un catalogue calme, où **la couleur dit le type** : chaque Pokémon porte la couleur de son premier type sur sa vignette, son numéro et ses barres de statistiques. Le reste de l'interface est neutre.
 
-- **Couleurs** : une rampe de gris, trois rôles de texte, un accent, déclarés en variables CSS dans `app/globals.css`. Le thème sombre ne change que ces variables, aucun composant n'a de variante `dark:`.
+- **Structure** : sur écran large, une colonne fixe à gauche porte toute la navigation (recherche, pages, les 18 types, et l'équipe de six toujours visible en bas) ; la page ne montre que le contenu. Sur téléphone : un en-tête, le contenu, et une barre d'onglets en bas.
+- **Fiche** : un bandeau à la couleur du type, quatre chiffres clés, puis les statistiques et la chaîne d'évolution côte à côte.
+- **Couleurs** : une rampe de gris, trois rôles de texte, un accent rare (le rouge du Pokédex), déclarés en variables CSS dans `app/globals.css`. Le thème sombre ne change que ces variables, aucun composant n'a de variante `dark:`.
+- **Teinte par type** : la variable `--type` est posée sur la carte ou la fiche ; les utilitaires `teinte-type` et `encre-type` s'en servent.
+- **Titres** : un grand titre par page, avec son compte en petit à côté (`components/TitrePage.tsx`).
 - **Typographie** : Geist pour l'interface, Geist Mono pour les numéros et les chiffres.
-- **Types** : une pastille de couleur et un nom, plutôt qu'une étiquette pleine.
+- **Types** : le logo officiel de chaque type (symbole blanc sur un disque de sa couleur), dans les vignettes, la fiche et les filtres.
 - **Boutons** : les styles sont écrits une fois dans `lib/styles.ts`. Icônes [lucide](https://lucide.dev), une taille et une épaisseur.
 - **Mouvement** : une seule courbe, des survols en changement de surface, une entrée discrète du contenu.
 
 La direction suit la méthode [unslop](https://github.com/heydamir/unslop) de Damir Sokolovsky (CC BY 4.0).
+
+## Crédits
+
+- Données et illustrations : [PokéAPI](https://pokeapi.co).
+- Logos des types : [pokemon-type-svg-icons](https://github.com/duiker101/pokemon-type-svg-icons), copiés dans `public/types/`.
+- Pokémon et les noms des Pokémon sont des marques de Nintendo. Projet scolaire, sans but commercial.
 
 ## Lancer le projet
 

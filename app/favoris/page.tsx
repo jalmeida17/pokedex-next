@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import CompteurFavoris from "@/components/CompteurFavoris";
 import ListeFavoris from "@/components/ListeFavoris";
+import TitrePage from "@/components/TitrePage";
 
 export const metadata: Metadata = {
   title: "Mes favoris",
@@ -10,10 +12,9 @@ export const metadata: Metadata = {
 export default function PageFavoris() {
   return (
     <>
-      <div className="mb-8">
-        <h1 className="text-3xl font-medium tracking-tight sm:text-4xl">Mes favoris</h1>
-        <p className="mt-2 text-[15px] text-texte-2">Les Pokémon marqués d’une étoile, gardés dans ce navigateur</p>
-      </div>
+      <TitrePage titre="Favoris" exposant={<CompteurFavoris />}>
+        Les Pokémon marqués d’une étoile, gardés dans ce navigateur
+      </TitrePage>
       <ListeFavoris />
     </>
   );

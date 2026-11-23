@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
+import BarreLaterale from "@/components/BarreLaterale";
 import EnTete from "@/components/EnTete";
+import FondPoints from "@/components/FondPoints";
 import HydratationStores from "@/components/HydratationStores";
+import OngletsMobile from "@/components/OngletsMobile";
 import PiedDePage from "@/components/PiedDePage";
 import { CLE_THEME } from "@/lib/theme";
 import "./globals.css";
@@ -19,30 +23,45 @@ export const metadata: Metadata = {
   description: "Les 1 025 Pokémon, leurs types et leurs statistiques.",
 };
 
+// La coque du site.
+// Écran large : une colonne fixe à gauche (BarreLaterale) et le contenu à droite.
+// Téléphone : un en-tête (EnTete), le contenu, et une barre d'onglets en bas (OngletsMobile).
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning : le script ci-dessous peut ajouter data-theme avant React.
     <html
       lang="fr"
-      className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geist.variable} ${geistMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
         <script>{SCRIPT_THEME}</script>
       </head>
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="font-sans">
         <a
           href="#contenu"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-30 focus:rounded-lg focus:bg-texte focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:text-inverse"
         >
           Aller au contenu
         </a>
+        <FondPoints />
         <HydratationStores />
-        <EnTete />
-        <main id="contenu" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-          {children}
-        </main>
-        <PiedDePage />
+
+        <div className="lg:grid lg:grid-cols-[16.5rem_minmax(0,1fr)]">
+          <BarreLaterale />
+          <div className="flex min-h-dvh min-w-0 flex-col pb-14 lg:pb-0">
+            <EnTete />
+            <main id="contenu" className="mx-auto w-full max-w-[84rem] flex-1 px-4 py-8 sm:px-6 lg:px-10 lg:py-12">
+              {children}
+            </main>
+            <PiedDePage />
+          </div>
+        </div>
+
+        {/* usePathname dépend de l'adresse : Suspense garde la coque pré-rendue. */}
+        <Suspense fallback={null}>
+          <OngletsMobile />
+        </Suspense>
       </body>
     </html>
   );

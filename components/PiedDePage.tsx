@@ -1,7 +1,7 @@
 export default function PiedDePage() {
   return (
     <footer className="border-t border-trait">
-      <p className="mx-auto max-w-6xl px-4 py-6 text-[13px] text-texte-3 sm:px-6">
+      <p className="mx-auto max-w-[84rem] px-4 py-6 text-[13px] text-texte-3 sm:px-6 lg:px-10">
         Données de la{" "}
         <a
           href="https://pokeapi.co"

@@ -1,5 +1,6 @@
 "use client";
 import { Plus, X } from "lucide-react";
+import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BadgeType from "@/components/BadgeType";
@@ -7,7 +8,7 @@ import BoutonVider from "@/components/BoutonVider";
 import { useEstHydrate } from "@/hooks/useEstHydrate";
 import { useTypesCouverts } from "@/hooks/useTypesCouverts";
 import { BOUTON_ICONE, ICONE, ICONE_NEUTRE, ICONE_PETITE } from "@/lib/styles";
-import { formaterNumero } from "@/lib/types";
+import { couleurType, formaterNumero } from "@/lib/types";
 import { TAILLE_SACOCHE, useSacoche } from "@/stores/sacoche";
 
 const GRILLE = "grid gap-3 sm:grid-cols-2 lg:grid-cols-3";
@@ -57,11 +58,15 @@ export default function ContenuSacoche() {
 
       <ul className={GRILLE}>
         {equipe.map((membre) => (
-          <li key={membre.id} className="flex items-center gap-3 rounded-2xl border border-trait bg-carte p-2 pr-3">
+          <li
+            key={membre.id}
+            style={{ "--type": couleurType(membre.types[0]) } as CSSProperties}
+            className="flex items-center gap-3 rounded-2xl border border-trait bg-carte p-2 pr-3"
+          >
             <Link
               href={`/pokemon/${membre.nom}`}
               aria-label={`Voir la fiche de ${membre.nom}`}
-              className="relative size-20 shrink-0 overflow-hidden rounded-lg bg-releve transition-colors duration-150 ease-doux hover:bg-releve-2"
+              className="teinte-type relative size-20 shrink-0 overflow-hidden rounded-lg"
             >
               <Image
                 src={membre.image}
@@ -73,7 +78,7 @@ export default function ContenuSacoche() {
               />
             </Link>
             <div className="min-w-0 flex-1">
-              <p className="px-2 font-mono text-xs tabular-nums text-texte-3">{formaterNumero(membre.id)}</p>
+              <p className="encre-type px-2 font-mono text-xs tabular-nums">{formaterNumero(membre.id)}</p>
               <input
                 value={membre.surnom}
                 onChange={(e) => renommer(membre.id, e.target.value)}
